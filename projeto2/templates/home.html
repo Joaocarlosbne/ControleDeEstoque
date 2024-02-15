@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1 class="mx-auto text-black">Lista de Produtos</h1>
+  <a href="{% url 'add_produto' %}" class="text-blue-500 underline">Adicionar Produto</a>
+  <table class="min-w-full divide-y divide-gray-200 bg-white shadow overflow-hidden sm:rounded-lg">
+    <thead class="bg-gray-50">
+      <tr>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Preço</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantidade</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Descrição</th>
+        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
+      </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200">
+      {% for produto in produtos %}
+        <tr>
+          <td class="px-6 py-4 whitespace-nowrap">{{ produto.nome }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">{{ produto.preco }}</td>
+          {% if produto.Quantidade < 10 %}
+            <td class="px-6 py-4 whitespace-nowrap bg-red-500">{{ produto.Quantidade }}</td>
+          {% else %}
+            <td class="px-6 py-4 whitespace-nowrap">{{ produto.Quantidade }}</td>
+          {% endif %}
+          <td class="px-6 py-4 whitespace-nowrap">{{ produto.descrição }}</td>
+          <td class="px-6 py-4 whitespace-nowrap">
+            <a href="{% url 'edit_produto' produto.id %}" class="text-blue-500 underline">Editar</a> |
+            <a href="{% url 'delete_produto' produto.id %}" class="text-red-500 underline">Remover</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5" class="px-6 py-4 whitespace-nowrap">Nenhum produto encontrado.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
